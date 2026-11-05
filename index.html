@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>学習ロック解除トラッカー</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f2f2f7; color: #1c1c1e; text-align: center; padding: 20px; margin: 0; }
+  .card { background: #ffffff; padding: 25px 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); max-width: 400px; margin: 20px auto; }
+  h2 { margin-top: 0; font-size: 20px; color: #333; }
+  .progress-box { font-size: 42px; font-weight: 800; color: #007AFF; margin: 20px 0; }
+  .btn { display: block; width: 100%; padding: 16px; font-size: 18px; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; margin-bottom: 12px; box-sizing: border-box; text-decoration: none; }
+  .btn-add { background: #34C759; color: white; }
+  .btn-add-sub { background: #e5f9e7; color: #248a3d; font-size: 16px; padding: 12px; }
+  .btn-study { background: #007AFF; color: white; margin-top: 20px; }
+  .btn-reset { background: #ff3b30; color: white; font-size: 14px; padding: 10px; margin-top: 15px; width: auto; display: inline-block; }
+  .settings { margin-top: 25px; padding-top: 15px; border-top: 1px solid #e5e5ea; font-size: 14px; color: #666; }
+  input[type="number"] { width: 65px; font-size: 16px; padding: 6px; text-align: center; border: 1px solid #ccc; border-radius: 8px; margin: 0 5px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>🔒 第2ロック：資格勉強ノルマ</h2>
+  
+  <div class="progress-box">
+    <span id="current">0</span> / <span id="target-display">20</span> <span style="font-size:20px;">問</span>
+  </div>
+
+  <button class="btn btn-add" onclick="addCount(1)">＋ 1問 解いた！</button>
+  <button class="btn btn-add-sub" onclick="addCount(5)">＋ 5問 まとめて記録</button>
+  <button class="btn btn-add-sub" onclick="addCount(10)">＋ 10問 まとめて記録</button>
+
+  <!-- 学習サイトへのリンク -->
+  <a href="https://www.fe-siken.com/fekakomon.php" target="_blank" class="btn btn-study">📖 過去問サイトを開く</a>
+
+  <div class="settings">
+    <div>
+      目標問題数の変更: 
+      <input type="number" id="target-input" value="20" min="1" onchange="updateTarget()"> 問
+    </div>
+    <button class="btn btn-reset" onclick="resetProgress()">進捗を0にリセット</button>
+  </div>
+</div>
+
+<script>
+  let current = parseInt(localStorage.getItem('study_current')) || 0;
+  let target = parseInt(localStorage.getItem('study_target')) || 20;
+
+  function updateDisplay() {
+    document.getElementById('current').innerText = current;
+    document.getElementById('target-display').innerText = target;
+    document.getElementById('target-input').value = target;
+  }
+
+  function addCount(num) {
+    current += num;
+    localStorage.setItem('study_current', current);
+    updateDisplay();
+
+    if (current >= target) {
+      localStorage.setItem('study_current', 0);
+      document.querySelector('.card').innerHTML = `
+        <h2>🎉 全ロック解除！</h2>
+        <p>DoHabitを起動します。今日も1日お疲れ様でした！</p>
+        <button class="btn btn-study" onclick="location.reload()">元の画面に戻る</button>
+      `;
+      window.location.href = "shortcuts://run-shortcut?name=UnlockStudy";
+    }
+  }
+
+  function updateTarget() {
+    const val = parseInt(document.getElementById('target-input').value);
+    if (val > 0) {
+      target = val;
+      localStorage.setItem('study_target', target);
+      updateDisplay();
+    }
+  }
+
+  function resetProgress() {
+    if(confirm("現在の進捗を0に戻しますか？")) {
+      current = 0;
+      localStorage.setItem('study_current', 0);
+      updateDisplay();
+    }
+  }
+
+  updateDisplay();
+</script>
+</body>
+</html>
