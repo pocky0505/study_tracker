@@ -1,576 +1,576 @@
-<!DOCTYPE html >
-< html  lang =" ja " >
-<head>​​
-    < meta  charset =" UTF-8 " >
-    < meta  name =" viewport " content =" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no " >
-    < meta  name =" apple-mobile-web-app-capable " content =" yes " >
-    < meta  name =" apple-mobile-web-app-status-bar-style " content =" default " >
-    < title >バルクアップ＆栄養管理 AI Pro </ title >
-    <スタイル>
-        ：根 {
-            --bg :  # f8fafc ;
-            --カード:  # ffffff ;
-            --プライマリ:  # 2563eb ;
-            --primary-light :  # eff6ff ;
-            --タンパク質:  # ef4444 ;
-            --fat :  # f59e0b ;
-            --炭水化物:  # 10b981 ;
-            --text :  # 1e293b ;
-            --subtext :  # 64748b ;
-            --border :  # e2e8f0 ;
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>バルクアップ＆栄養管理 AI Pro</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --protein: #ef4444;
+            --fat: #f59e0b;
+            --carbs: #10b981;
+            --text: #1e293b;
+            --subtext: #64748b;
+            --border: #e2e8f0;
         }
-        *  {  box-sizing : border-box ;  margin :  0 ;  padding :  0 ;  font-family : -apple-system , BlinkMacSystemFont ,  "Segoe UI" , Roboto , sans-serif ;  }
-        body  {  background-color :  var ( -- bg ) ;  color :  var ( -- text ) ;  padding :  14px ;  max-width : 720px  ; margin  : 0  auto ; line  -height :  1.5 ;  padding-bottom :  40px ;  }
-        h1  {  font-size :  1.25rem ; font-weight : 800 ; color : var ( --  text ) ; }    
-        .subtitle { font -size : 0.78rem ; color : var ( -- subtext ) ; margin- bottom : 12px ; }        
-        .card { background : var ( --card )  ; border - radius : 12px ; padding : 14px ; margin - bottom : 12px ; box - shadow : 0 1px 3px rgba ( 0 , 0 , 0 , 0.05 ) ; border : 1px solid var ( -- border ) ; }                
-        .card -header  {  display : flex ;  justify-content : space-between ;  align-items : center ;  margin- bottom :  10px ;  }
-        .card -title  {  font-size :  0.92rem ; font -weight : 700 ;  color : var ( --text ) ; display : flex ; align- items : center ; gap : 6px ; }        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 14px; max-width: 720px; margin: 0 auto; line-height: 1.5; padding-bottom: 40px; }
+        h1 { font-size: 1.25rem; font-weight: 800; color: var(--text); }
+        .subtitle { font-size: 0.78rem; color: var(--subtext); margin-bottom: 12px; }
+        .card { background: var(--card); border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .card-title { font-size: 0.92rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 6px; }
         
-        /* 日付・体重表示バー */
-        .date -control-bar  {  display : flex ;  justify-content : space-between ;  align-items : center ; flex  -wrap : wrap ;  gap :  8px ;  }
-        .date -stepper  {  display : flex ; align  - items : center ;  gap :  4px ; } 
-        .date -btn  {  background :  var ( --bg ) ; border  : 1px  solid var ( -- border ) ; border  - radius :  6px ;  padding :  5px 9px  ; font - size : 0.82rem ; cursor : pointer ; }    
-        .date -input  {  padding :  5px  8px ;  border :  1px solid var ( -- border ) ; border-radius : 6px ; font - size : 0.85rem ; font - weight : 600 ; }       
-        .weight -box  {  display : flex ;  align-items : center ;  gap :  4px ;  font -size : 0.82rem  ; font -weight : 600 ; }   
-        .weight - input  {  width :  68px ;  padding :  5px  6px ;  border :  1px solid var ( -- border ) ; border - radius : 6px ; font - size : 0.85rem ; }     
+        /* 日付・体重コントロールバー */
+        .date-control-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .date-stepper { display: flex; align-items: center; gap: 4px; }
+        .date-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 9px; font-size: 0.82rem; cursor: pointer; }
+        .date-input { padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+        .weight-box { display: flex; align-items: center; gap: 4px; font-size: 0.82rem; font-weight: 600; }
+        .weight-input { width: 68px; padding: 5px 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
 
         /* 設定パネル */
-        .config - grid  {  display : grid ;  grid-template-columns :  repeat ( auto - fit ,  minmax ( 130px ,  1fr ) ) ; gap : 8px ; margin -bottom : 10px ; }     
-        .config -item  {  display : flex ; flex  - direction : column ;  gap :  3px ; } 
-        .config -item  label  {  font-size :  0.72rem ; color : var  ( -- subtext ) ; font-weight : 600 ; }    
-        .config - item  input ,  .config -item  select  {  padding :  7px  8px ;  border :  1px solid var ( -- border ) ; border - radius : 6px ; font - size : 0.85rem ; background : #fff ; }       
-        .calc -summary  {  background :  var ( -- primary - light ) ;  border :  1px solid #bfdbfe ;  border-radius :  8px ;  padding :  8px 12px ; font-size : 0.8rem ; color : # 1e40af ; display : flex ; justify - content : space -between ; flex - wrap : wrap  ; gap : 6px ; }          
+        .config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 10px; }
+        .config-item { display: flex; flex-direction: column; gap: 3px; }
+        .config-item label { font-size: 0.72rem; color: var(--subtext); font-weight: 600; }
+        .config-item input, .config-item select { padding: 7px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; background: #fff; }
+        .calc-summary { background: var(--primary-light); border: 1px solid #bfdbfe; border-radius: 8px; padding: 8px 12px; font-size: 0.8rem; color: #1e40af; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
 
         /* APIキー設定 */
-        .api -box  { background  : #  fefce8 ; border  : 1px  solid # fef08a ; border - radius : 8px ; padding  : 10px ; margin - bottom : 12px ; }      
-        .api -row  {  display : flex ;  gap :  6px ;  align -items : center ;  }
-        .api -  input {  flex :  1 ;  padding :  7px  10px ;  border : 1px solid # eab308 ; border - radius : 6px ; font - size : 0.82rem ;  }     
-        .btn -save - key  {  background :  # ca8a04 ;  color :  #fff ;  border : none ;  padding :  7px 12px  ; border -radius : 6px ; font- size : 0.8rem ; font - weight : 600 ; cursor : pointer ; }        
+        .api-box { background: #fefce8; border: 1px solid #fef08a; border-radius: 8px; padding: 10px; margin-bottom: 12px; }
+        .api-row { display: flex; gap: 6px; align-items: center; }
+        .api-input { flex: 1; padding: 7px 10px; border: 1px solid #eab308; border-radius: 6px; font-size: 0.82rem; }
+        .btn-save-key { background: #ca8a04; color: #fff; border: none; padding: 7px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 
         /* AI検索バー */
-        .ai - card  {  border :  2px solid var ( -- primary ) ; background : #ffffff ; }   
-        .ai - row  {  display : flex ;  gap :  6px ; } 
-        .ai -input  {  flex :  1 ;  padding :  9px  12px ;  border :  1.5px solid var ( -- primary ) ; border - radius : 8px ; font - size : 0.9rem ; }     
-        .btn -ai  {  background :  linear-gradient ( 135deg ,  # 2563eb ,  # 6366f1 ) ;  color :  #fff ; border : none ; padding : 9px 15px ; border-radius : 8px ; font - weight : 700 ; cursor : pointer ; font - size :  0.88rem ; white - space : nowrap ; }            
-        .btn -ai : disabled  {  opacity :  0.6 ;  }
-        .status -msg  {  font-size :  0.75rem ; margin -top : 6px ;  min-height : 18px ; word -break : break- all ; }     
+        .ai-card { border: 2px solid var(--primary); background: #ffffff; }
+        .ai-row { display: flex; gap: 6px; }
+        .ai-input { flex: 1; padding: 9px 12px; border: 1.5px solid var(--primary); border-radius: 8px; font-size: 0.9rem; }
+        .btn-ai { background: linear-gradient(135deg, #2563eb, #6366f1); color: #fff; border: none; padding: 9px 15px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.88rem; white-space: nowrap; }
+        .btn-ai:disabled { opacity: 0.6; }
+        .status-msg { font-size: 0.75rem; margin-top: 6px; min-height: 18px; word-break: break-all; }
 
-        /* プログレバー */
-        .macro - grid  {  display : grid ; grid-template  - columns :  1fr ; gap : 10px ; }   
-        .macro -item  {  display : flex ; flex  - direction : column ;  gap :  3px ; } 
-        .macro -header  {  display : flex ;  justify-content : space-between ;  font-size : 0.85rem  ; font -weight : 600 ; }   
-        .bar -bg  {  width :  100 % ;  height :  12px ;  background :  # e2e8f0 ;  border - radius :  999px ;  overflow : hidden ; } 
-        .bar - fill  {  height :  100 % ;  width :  0 % ;  transition : width 0.3s ease ; border - radius : 999px ; }   
-        .cal -bar  {  background :  var ( -- primary ) ;  height :  16px ;  }
-        。p-bar  { 背景:  var ( --protein ) ;  }
-        。f-bar  { 背景:  var ( --fat ) ;  }
-        .c -bar  {  background :  var ( --carbs ) ;  }
-        .remain -text  {  font-size :  0.75rem ; color : var  ( -- subtext ) ; text-align : right ; }   
+        /* プログレスバー */
+        .macro-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .macro-item { display: flex; flex-direction: column; gap: 3px; }
+        .macro-header { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; }
+        .bar-bg { width: 100%; height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; transition: width 0.3s ease; border-radius: 999px; }
+        .cal-bar { background: var(--primary); height: 16px; }
+        .p-bar { background: var(--protein); }
+        .f-bar { background: var(--fat); }
+        .c-bar { background: var(--carbs); }
+        .remain-text { font-size: 0.75rem; color: var(--subtext); text-align: right; }
 
-        /* 定番・履歴 */
-        .preset -grid  {  display : grid ;  grid-template-columns : repeat (  auto - fill , minmax  ( 150px , 1fr  ) ) ; gap : 6px ; margin - top : 6px ; }     
-        .preset -btn  {  background :  var ( --bg ) ; border  : 1px  solid var ( -- border ) ; border  -radius : 6px  ; padding : 6px 8px ; text - align : left ; cursor : pointer ; }      
-        .preset -btn : active  {  background :  var (-- primary-light ) ;  }
-        .preset -name  {  font-size :  0.78rem ; font - weight : 600 ;  display : block ; }   
-        .preset -meta  {  font-size :  0.68rem ; color : var ( --  subtext ) ; }  
+        /* 定番・履歴ショートカット */
+        .preset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-top: 6px; }
+        .preset-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; text-align: left; cursor: pointer; }
+        .preset-btn:active { background: var(--primary-light); }
+        .preset-name { font-size: 0.78rem; font-weight: 600; display: block; }
+        .preset-meta { font-size: 0.68rem; color: var(--subtext); }
 
         /* 履歴リストアイテム */
-        .history -list  {  display : flex ;  flex-direction : column ;  gap :  6px ;  margin -top :  6px ;  max-height : 190px  ; overflow  - y : auto ;  }
-        .history -item  {  display : flex ;  justify-content : space-between ;  align-items : center ;  background :  var ( --bg ) ; border  : 1px  solid var ( -- border ) ; border  - radius :  6px ;  padding :  6px 10px  ; font - size : 0.8rem ;  }  
-        .history -info  {  display : flex ;  flex-direction : column ;  }
-        .btn -quick-add  {  background :  var (-- primary -light ) ;  border :  1px solid #bfdbfe ;  color : var ( -- primary ) ; font - weight : 700 ; border -  radius : 4px ; padding : 4px 8px ; cursor : pointer ; font - size : 0.75rem ; }           
-        .btn - quick-add : active  {  background :  #dbeafe ;  }
+        .history-list { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; max-height: 190px; overflow-y: auto; }
+        .history-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 0.8rem; }
+        .history-info { display: flex; flex-direction: column; }
+        .btn-quick-add { background: var(--primary-light); border: 1px solid #bfdbfe; color: var(--primary); font-weight: 700; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; }
+        .btn-quick-add:active { background: #dbeafe; }
 
-        /* 入力と記録フォーム */
-        .manual -grid  {  display : grid ;  grid-template-columns : 2fr repeat  ( 4  , 1fr ) auto ; gap : 6px ; align - items : flex -end ; }     
-        @media  ( max-width :  600 px )  {
-            .manual -grid  {  grid-template- columns :  repeat ( 2 ,  1fr ) ; } 
-            .manual -grid  .full -w  {  grid-column : span 2 ;  }
-            . manual-grid  button  {  grid-column : span 2 ;  }
+        /* 手動入力＆記録フォーム */
+        .manual-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr) auto; gap: 6px; align-items: flex-end; }
+        @media (max-width: 600px) {
+            .manual-grid { grid-template-columns: repeat(2, 1fr); }
+            .manual-grid .full-w { grid-column: span 2; }
+            .manual-grid button { grid-column: span 2; }
         }
-        .manual -input  {  display : flex ; flex  - direction : column ;  gap :  2px ; } 
-        .manual -input  label  {  font-size :  0.68rem ; font-weight : 600 ;  color : var ( -- subtext ) ; }    
-        .manual -input  input  {  width :  100 % ;  padding :  6px ;  border :  1px solid var ( -- border ) ;  border -radius : 6px  ; font  - size :  0.82rem ; } 
-        .btn -add  {  background :  var ( -- primary ) ;  color :  #fff ;  border : none ;  padding :  8px 12px  ; border - radius : 6px ;  font - weight : 700 ; cursor : pointer ; font - size : 0.85rem ; height : 35px ; }         
+        .manual-input { display: flex; flex-direction: column; gap: 2px; }
+        .manual-input label { font-size: 0.68rem; font-weight: 600; color: var(--subtext); }
+        .manual-input input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.82rem; }
+        .btn-add { background: var(--primary); color: #fff; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; height: 35px; }
 
         /* ログリスト */
-        .food -list  {  list-style : none ;  }
-        .food - item  {  display : flex ;  justify-content : space-between ;  align -items : center ;  padding :  7px  0 ;  border-bottom :  1px solid var ( -- border ) ; font-size : 0.82rem ; }   
-        .food -item : last-child  {  border-bottom : none ;  }
-        .food -macros  {  font-size :  0.72rem ; color : var ( --  subtext ) ; }  
-        .btn -del  { background  : none ; border  : none ; color  : #  ef4444 ; cursor  : pointer ; font  - size : 0.75rem  ; padding  : 3px  6px ;  border - radius : 4px ; }   
-        .toggle -btn  {  background : none ;  border : none ;  color :  var ( -- primary ) ;  font-size :  0.78rem ; cursor : pointer ; text-decoration : underline ; }   
-    </style>​​
-</head>​​
-<本文>
+        .food-list { list-style: none; }
+        .food-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+        .food-item:last-child { border-bottom: none; }
+        .food-macros { font-size: 0.72rem; color: var(--subtext); }
+        .btn-del { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 0.75rem; padding: 3px 6px; border-radius: 4px; }
+        .toggle-btn { background: none; border: none; color: var(--primary); font-size: 0.78rem; cursor: pointer; text-decoration: underline; }
+    </style>
+</head>
+<body>
 
-    < div  style =" display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; " >
-        < h1 >バルクアップ＆栄養管理 AI Pro </ h1 >
-        < button  class =" toggle - btn " onclick =" toggleConfig() " > ⚙️設定</button>
-    </div>​​
-    < p  class =" subtitle " > AI自動検索・履歴再入力・日別保存・継続目標連動</ p >
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <h1>バルクアップ＆栄養管理 AI Pro</h1>
+        <button class="toggle-btn" onclick="toggleConfig()">⚙️ 設定</button>
+    </div>
+    <p class="subtitle">AI自動検索・履歴再入力・日別保存・リアルタイム目標連動</p>
 
-    <!-- 日付＆体重管理バー -->
-    < div  class =" card date-control-bar " >
-        < div  class =" date-stepper " >
-            < button  class =" date - btn " onclick =" shiftDate(-1) " > ◀前日</button>
-            < input  type =" date " id =" targetDatePicker " class =" date-input " onchange =" onDateChanged() " >
-            < button  class =" date - btn " onclick =" shiftDate(1) " > ▶ </button>
-            < button  class =" date - btn " onclick =" setTodayDate() " >今日</button>
-        </div>​​
-        < div  class =" weight-box " >
-            <スパン> ⚖️ 体重: </スパン>
-            < input  type =" number " id =" dailyWeightInput " class =" weight-input " step =" 0.1 " placeholder =" 58.0 " onchange =" saveDailyWeight() " >
-            < span > kg </ span >
-        </div>​​
-    </div>​​
+    <!-- 日付＆体重コントロールバー -->
+    <div class="card date-control-bar">
+        <div class="date-stepper">
+            <button class="date-btn" onclick="shiftDate(-1)">◀ 前日</button>
+            <input type="date" id="targetDatePicker" class="date-input" onchange="onDateChanged()">
+            <button class="date-btn" onclick="shiftDate(1)">翌日 ▶</button>
+            <button class="date-btn" onclick="setTodayDate()">今日</button>
+        </div>
+        <div class="weight-box">
+            <span>⚖️ 体重:</span>
+            <input type="number" id="dailyWeightInput" class="weight-input" step="0.1" placeholder="58.0" onchange="saveDailyWeight()">
+            <span>kg</span>
+        </div>
+    </div>
 
     <!-- APIキー設定エリア -->
-    < div  class =" api-box " >
-        < div  style =" font-size:0.75rem; font-weight:700; color:#854d0e; margin-bottom:4px; " > 🔑 Gemini APIキー</div>
-        < div  class =" api-row " >
-            < input  type ="パスワード" id =" apiKeyInput " class =" api-input " placeholder =" AQ.Ab8RN6... または AIzaSy... " >
-            < button  class =" btn -save-key " onclick = " saveApiKey() " >保存</button>
-        </div>​​
-    </div>​​
+    <div class="api-box">
+        <div style="font-size:0.75rem; font-weight:700; color:#854d0e; margin-bottom:4px;">🔑 Gemini APIキー</div>
+        <div class="api-row">
+            <input type="password" id="apiKeyInput" class="api-input" placeholder="AQ.Ab8RN6... または AIzaSy...">
+            <button class="btn-save-key" onclick="saveApiKey()">保存</button>
+        </div>
+    </div>
 
-    <!-- 条件・目標設定（指定） -->
-    < div  class =" card " id =" configCard " style =" display:none; " >
-        < div  class =" card-header " >
-            < span  class =" card -title " > ⚙️目標・身体状態の変更</span>
-        </div>​​
-        < div  class =" config-grid " >
-            < div  class =" config -item " > <label> ( cm ) </label> < input type = " number " id =" cfgHeight " value =" 175 " onchange = " recalculateTargets( ) " > </div> 
-            < div  class =" config-item " > <label>現在の体重 (kg)</label> < input type = " number " id = " cfgWeight " step = " 0.1 " value = " 58.0 " onchange =" recalculateTargets ( ) " > </div> 
-            < div  class =" config-item " > <label>目標体重（kg）</label> < input type = " number " id = " cfgGoalWeight " step = " 0.1 " value = " 68.0 " onchange = " recalculateTargets( ) " > </div> 
-            < div  class =" config-item " >
-                < label >活動量</ label >
-                < select  id =" cfgActivity " onchange =" recalculateTargets() " >
-                    <オプション 値=" 1.2 "を選択>消臭（座学・研究中心）</オプション>
-                    <オプション 値=" 1.375 " >普通（立ち仕事あり）</オプション>
-                    < option  value =" 1.55 " >多め（活動的）</ option >
-                </select>​​
-            </div>​​
-            < div  class =" config-item " >
-                < label >筋トレ頻度</ label >
-                < select  id =" cfgWorkout " onchange =" recalculateTargets() " >
-                    <オプション 値=" 0 " >週 0 回</オプション>
-                    <オプション 値=" 2 " >週 2 回</オプション>
-                    <オプション 値=" 3 "を選択>週 3 回（推奨）</オプション>
-                    <オプション 値=" 4 " >週 4 回</オプション>
-                </select>​​
-            </div>​​
-            < div  class =" config-item " >
-                < label >増量ペース</ label >
-                < select  id =" cfgSurplus " onchange =" recalculateTargets() " >
-                    <オプション 値=" 300 " >暖かい (+300kcal) </オプション>
-                    <オプション 値=" 500 "選択>標準増量 (+500kcal) </オプション>
-                    <オプション 値=" 700 " >ハイペース (+700kcal) </オプション>
-                </select>​​
-            </div>​​
-        </div>​​
-        < div  class =" calc-summary " >
-            <span>基礎代謝: < strong id = " bmrVal " > 1560 </strong> kcal </span>​​​ 
-            <span>維持カロリー: < strong id = " tdeeVal " > 2150 </strong> kcal </span>​​​ 
-            <span> 1日の目標: < strong id = " targetCalVal " > 2650 </strong> kcal </span>​ 
-        </div>​​
-    </div>​​
+    <!-- 条件・目標設定（折りたたみ） -->
+    <div class="card" id="configCard" style="display:none;">
+        <div class="card-header">
+            <span class="card-title">⚙️ 目標・身体条件の変更</span>
+        </div>
+        <div class="config-grid">
+            <div class="config-item"><label>身長 (cm)</label><input type="number" id="cfgHeight" value="175" onchange="recalculateTargets()"></div>
+            <div class="config-item"><label>現在体重 (kg)</label><input type="number" id="cfgWeight" step="0.1" value="58.0" onchange="recalculateTargets()"></div>
+            <div class="config-item"><label>目標体重 (kg)</label><input type="number" id="cfgGoalWeight" step="0.1" value="68.0" onchange="recalculateTargets()"></div>
+            <div class="config-item">
+                <label>活動量</label>
+                <select id="cfgActivity" onchange="recalculateTargets()">
+                    <option value="1.2" selected>少なめ（座学・研究中心）</option>
+                    <option value="1.375">普通（立ち仕事あり）</option>
+                    <option value="1.55">多め（活動的）</option>
+                </select>
+            </div>
+            <div class="config-item">
+                <label>筋トレ頻度</label>
+                <select id="cfgWorkout" onchange="recalculateTargets()">
+                    <option value="0">週0回</option>
+                    <option value="2">週2回</option>
+                    <option value="3" selected>週3回（推奨）</option>
+                    <option value="4">週4回</option>
+                </select>
+            </div>
+            <div class="config-item">
+                <label>増量ペース</label>
+                <select id="cfgSurplus" onchange="recalculateTargets()">
+                    <option value="300">緩やか (+300kcal)</option>
+                    <option value="500" selected>標準増量 (+500kcal)</option>
+                    <option value="700">ハイペース (+700kcal)</option>
+                </select>
+            </div>
+        </div>
+        <div class="calc-summary">
+            <span>基礎代謝: <strong id="bmrVal">1560</strong> kcal</span>
+            <span>維持カロリー: <strong id="tdeeVal">2150</strong> kcal</span>
+            <span>1日の目標: <strong id="targetCalVal">2650</strong> kcal</span>
+        </div>
+    </div>
 
-    <!-- AI自動結果検索 -->
-    < div  class =" card ai-card " >
-        < div  class =" card-header " >
-            < span  class =" card-title " style =" color:var(--primary); " > ✨ AI自然言語入力</ span >
-            < span  style =" font-size:0.72rem; color:var(--subtext); " > Web標準値から自動取得</span>
-        </div>​​
-        < div  class =" ai-row " >
-            < input  type =" text " id =" aiQuery " class =" ai-input " placeholder ="例：セブンの唐揚げ棒、吉野家の牛丼特盛" >
-            < button  id =" aiSearchBtn " class =" btn-ai " onclick =" fetchNutritionWithAI() " > AI 解析</ button >
-        </div>​​
-        < div  id =" aiStatus " class =" status-msg " style =" color:var(--subtext); " >料理名や外食メニューを入力して「AI解析」を押してください。</ div >
-    </div>​​
+    <!-- AI自動栄養検索 -->
+    <div class="card ai-card">
+        <div class="card-header">
+            <span class="card-title" style="color:var(--primary);">✨ AI自然言語入力</span>
+            <span style="font-size:0.72rem; color:var(--subtext);">Web標準値から自動取得</span>
+        </div>
+        <div class="ai-row">
+            <input type="text" id="aiQuery" class="ai-input" placeholder="例：セブンの唐揚げ棒、吉野家の牛丼特盛">
+            <button id="aiSearchBtn" class="btn-ai" onclick="fetchNutritionWithAI()">AI解析</button>
+        </div>
+        <div id="aiStatus" class="status-msg" style="color:var(--subtext);">料理名や外食メニューを入力して「AI解析」を押してください。</div>
+    </div>
 
-    <!-- 達成ダッシュボード -->
-    < div  class =" card " >
-        < div  class =" card-header " >
-            < span  class =" card - title " >摂取ステータス（< span  id =" curDateDisplay " > --/ -- </span> ）</span>
-            < span  id =" targetNotice " style =" font -size:0.75rem; color:var(--subtext); " >目標: 2650 kcal </span>
-        </div>​​
-        < div  class =" macro-grid " >
-            < div  class =" macro-item " >
-                < div  class =" Macro-header " > < spa >カロリー</ spa > < spa > < strong  id =" curCal " > 0 </ strong > / < spa n  id =" tCalText " > 2650 </ spa > kcal </ spain > </ div >
-                < div  class =" bar - bg cal-bar " > < div  id =" barCal " > class =" bar-fill cal-bar " > </div> </div>
-                < div  id =" remCal " class =" main-text " >あと 2650 kcal </ div >
-            </div>​​
-            < div  class =" macro-item " >
-                < div  class =" Macro-header " > < span  style =" color:var(--protein); " >タンパク質 (P) </ span > < span > < strong id  = " curP " > 0 </strong> / < span id =" tPText " > 120 </ span > g < / span > </ div > 
-                < div  class =" bar - bg " > < div  id =" barP " > class =" bar -fill p-bar " > </div> </div>
-            </div>​​
-            < div  class =" macro-item " >
-                < div  class = " macro -header " > < span  style =" color: var ( -- fat ) ; " > （ F ）</span> <span> < strong id = " curF " > 0 </strong> / < span id = " tFText " > 70 </span> g </span> </div>  
-                < div  class =" bar -bg " > < div  id =" barF " > class =" bar - fill f-bar " > </div> </div>
-            </div>​​
-            < div  class =" macro-item " >
-                < div  class =" macro - header " > < span style  = " color:var ( -- carbs ) ; " > （C）</span> <span> < strong id = " curC " > 0 </strong> / < span id = " tCText " > 385 </span> g </span> </div>  
-                < div  class =" bar - bg " > < div  id =" barC " > class =" bar - fill c-bar " > </div> </div>
-            </div>​​
-        </div>​​
-    </div>​​
+    <!-- 達成度ダッシュボード -->
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">摂取ステータス（<span id="curDateDisplay">--/--</span>）</span>
+            <span id="targetNotice" style="font-size:0.75rem; color:var(--subtext);">目標: 2650 kcal</span>
+        </div>
+        <div class="macro-grid">
+            <div class="macro-item">
+                <div class="macro-header"><span>カロリー</span><span><strong id="curCal">0</strong> / <span id="tCalText">2650</span> kcal</span></div>
+                <div class="bar-bg cal-bar"><div id="barCal" class="bar-fill cal-bar"></div></div>
+                <div id="remCal" class="remain-text">あと 2650 kcal</div>
+            </div>
+            <div class="macro-item">
+                <div class="macro-header"><span style="color:var(--protein);">タンパク質 (P)</span><span><strong id="curP">0</strong> / <span id="tPText">120</span> g</span></div>
+                <div class="bar-bg"><div id="barP" class="bar-fill p-bar"></div></div>
+            </div>
+            <div class="macro-item">
+                <div class="macro-header"><span style="color:var(--fat);">脂質 (F)</span><span><strong id="curF">0</strong> / <span id="tFText">70</span> g</span></div>
+                <div class="bar-bg"><div id="barF" class="bar-fill f-bar"></div></div>
+            </div>
+            <div class="macro-item">
+                <div class="macro-header"><span style="color:var(--carbs);">炭水化物 (C)</span><span><strong id="curC">0</strong> / <span id="tCText">385</span> g</span></div>
+                <div class="bar-bg"><div id="barC" class="bar-fill c-bar"></div></div>
+            </div>
+        </div>
+    </div>
 
     <!-- 履歴から再入力 -->
-    < div  class =" card " >
-        < div  class =" card-header " >
-            < span  class =" card -title " > 🕒履歴からワンタップ再入力</span>
-            < span  style =" font-size:0.72rem; color:var(--subtext); " >過去に食べたメニュー</ span >
-        </div>​​
-        < div  class = " history-list " id = " recentHistoryContainer " > </div>
-    </div>​​
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">🕒 履歴からワンタップ再入力</span>
+            <span style="font-size:0.72rem; color:var(--subtext);">過去に食べたメニュー</span>
+        </div>
+        <div class="history-list" id="recentHistoryContainer"></div>
+    </div>
 
     <!-- 確認＆追加フォーム -->
-    < div  class =" card " >
-        < div  class =" card-header " >
-            < span  class =" card-title " >数値の確認・記録</span>
-        </div>​​
-        < div  class =" manual-grid " >
-            < div  class =" manual-input full-w " >
-                < label >食品名</ label >
-                < input  type =" text " id =" manName " placeholder ="メニュー名" >
-            </div>​​
-            < div  class =" manual-input " > < label  style =" color:var(--protein); " > P ( g ) </label> < input type =" number " id = " manP " step =" 0.1 " > </div> 
-            < div  class =" manual-input " > < label  style =" color:var(--fat); " > F ( g ) </label> < input type = " number " id =" manF " step =" 0.1 " > </div> 
-            < div  class =" manual-input " > < label  style =" color:var(--carbs); " > C ( g) </label> < input type = " number " id = " manC " step =" 0.1 " > </div> 
-            < div  class =" manual -input " > < label  style =" color:var(--primary) ; " > kcal </label> < input type = " number " id = " manCal " > </div> 
-            < button  class =" btn-add " onclick =" addconfirmedFood() " >記録に追加</ button >
-        </div>​​
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">数値の確認・記録</span>
+        </div>
+        <div class="manual-grid">
+            <div class="manual-input full-w">
+                <label>食品名</label>
+                <input type="text" id="manName" placeholder="メニュー名">
+            </div>
+            <div class="manual-input"><label style="color:var(--protein);">P (g)</label><input type="number" id="manP" step="0.1"></div>
+            <div class="manual-input"><label style="color:var(--fat);">F (g)</label><input type="number" id="manF" step="0.1"></div>
+            <div class="manual-input"><label style="color:var(--carbs);">C (g)</label><input type="number" id="manC" step="0.1"></div>
+            <div class="manual-input"><label style="color:var(--primary);">kcal</label><input type="number" id="manCal"></div>
+            <button class="btn-add" onclick="addConfirmedFood()">記録に追加</button>
+        </div>
 
         <!-- ワンタップ定番メニュー（味噌汁1杯追加済み） -->
-        < div  style =" margin-top:12px; font-size:0.75rem; font-weight:600; color:var(--subtext); " >定番メニューをワンタップ：</ div >
-        < div  class =" preset - grid " id =" presetShortcutBox " > </div>
-    </div>​​
+        <div style="margin-top:12px; font-size:0.75rem; font-weight:600; color:var(--subtext);">ワンタップ定番メニュー：</div>
+        <div class="preset-grid" id="presetShortcutBox"></div>
+    </div>
 
     <!-- 選択中の日の食事ログ -->
-    < div  class =" card " >
-        < div  class =" card-header " >
-            < span  class =" card - title " > < spanid =  " logHeaderDate " >本日</span>のログ食事</span>
-            < button  class =" btn-del " onclick =" clearSelectedDayLog() " >この日をリセット</ button >
-        </div>​​
-        < ul  class = " food-list " id = " todayFoodList " > </ul>
-    </div>​​
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title"><span id="logHeaderDate">本日</span>の食事ログ</span>
+            <button class="btn-del" onclick="clearSelectedDayLog()">この日をリセット</button>
+        </div>
+        <ul class="food-list" id="todayFoodList"></ul>
+    </div>
 
-<スクリプト>
-    let  currentTargets  =  {  cal : 2650 ,  p : 120 ,  f : 70 ,  c : 385  } ;
-    let  activeDate  =  new  Date ( ) . toLocaleDateString ( 'sv-SE' ) ;
+<script>
+    let currentTargets = { cal: 2650, p: 120, f: 70, c: 385 };
+    let activeDate = new Date().toLocaleDateString('sv-SE');
 
-    // 1. 日付操作と体重
-    function  initDatePicker ( )  {
-        document.getElementById ( ' targetDatePicker ' ) . value = activeDate ;  
+    // 1. 日付操作＆体重
+    function initDatePicker() {
+        document.getElementById('targetDatePicker').value = activeDate;
     }
 
-    function  onDateChanged ( )  {
-        activeDate  =  document.getElementById ( ' targetDatePicker ' ) . value ;
-        renderDay ( ) ;
+    function onDateChanged() {
+        activeDate = document.getElementById('targetDatePicker').value;
+        renderDay();
     }
 
-    function  shiftDate ( offset )  {
-        const  d  =  new  Date ( activeDate ) ;
-        d.setDate ( d.getDate ( ) + offset ) ;​​​​  
-        activeDate  =  d.toLocaleDateString ( 'sv- SE ' ) ;
-        document.getElementById ( ' targetDatePicker ' ) . value = activeDate ;  
-        renderDay ( ) ;
+    function shiftDate(offset) {
+        const d = new Date(activeDate);
+        d.setDate(d.getDate() + offset);
+        activeDate = d.toLocaleDateString('sv-SE');
+        document.getElementById('targetDatePicker').value = activeDate;
+        renderDay();
     }
 
-    function  setTodayDate ( )  {
-        activeDate  =  new  Date ( ) . toLocaleDateString ( 'sv-SE' ) ;
-        document.getElementById ( ' targetDatePicker ' ) . value = activeDate ;  
-        renderDay ( ) ;
+    function setTodayDate() {
+        activeDate = new Date().toLocaleDateString('sv-SE');
+        document.getElementById('targetDatePicker').value = activeDate;
+        renderDay();
     }
 
-    function  saveDailyWeight ( )  {
-        const  val  =  document.getElementById ( ' dailyWeightInput ' ) . value ;
-        const  data  =  getDayData ( activeDate ) ;
-        data.weight = val ;​​  
-        saveDayData ( activeDate ,  data ) ;
+    function saveDailyWeight() {
+        const val = document.getElementById('dailyWeightInput').value;
+        const data = getDayData(activeDate);
+        data.weight = val;
+        saveDayData(activeDate, data);
     }
 
     // 2. APIキー管理
-    function  getApiKey ( )  {
-        return  localStorage.getItem ( 'user_gemini_api_key ' ) || " " ;  
+    function getApiKey() {
+        return localStorage.getItem('user_gemini_api_key') || "";
     }
-    function  saveApiKey ( )  {
-        const  key  =  document.getElementById ( ' apiKeyInput ' ) . value.trim ( ) ;​​
-        if  (キー)  {
-            localStorage.setItem ( ' user_gemini_api_key ' , key ) ; 
-            alert ( "APIキーを保存しました！" ) ;
+    function saveApiKey() {
+        const key = document.getElementById('apiKeyInput').value.trim();
+        if (key) {
+            localStorage.setItem('user_gemini_api_key', key);
+            alert("APIキーを保存しました！");
         }
     }
 
-    // 3. 目標値・PFC再計算
-    function  recalculateTargets ( )  {
-        const  h  =  parseFloat ( document.getElementById ( ' cfgHeight ' ) . value ) || 175 ;  
-        const  w  =  parseFloat ( document . getElementById ( 'cfgWeight' ) . value )  ||  58 ;
-        const  act  =  parseFloat ( document.getElementById ( ' cfgActivity ' ) . value ) || 1.2 ;  
-        const  workout  =  parseInt ( document . getElementById ( 'cfgWorkout' ) . value )  ||  3 ;
-        const  surplus  =  parseInt ( document . getElementById ( 'cfgSurplus' ) . value )  ||  500 ;
+    // 3. 目標カロリー・PFC再計算
+    function recalculateTargets() {
+        const h = parseFloat(document.getElementById('cfgHeight').value) || 175;
+        const w = parseFloat(document.getElementById('cfgWeight').value) || 58;
+        const act = parseFloat(document.getElementById('cfgActivity').value) || 1.2;
+        const workout = parseInt(document.getElementById('cfgWorkout').value) || 3;
+        const surplus = parseInt(document.getElementById('cfgSurplus').value) || 500;
 
-        const  bmr  =  Math.round ( 10 * w + 6.25 * h - 5 * 20 + 5 ) ;​​            
-        const  tdee  =  Math.round ( bmr * ( act + workout * 0.05 ) ) ;​​      
-        const  targetCal  =  tdee  +  surplus ;
-        const  targetP  =  Math.round ( w * 2.1 ) ;​​  
-        const  targetF  =  Math.round ( ( targetCal * 0.24 ) / 9 ) ;​​    
-        const  targetC  =  Math.round ( ( targetCal - ( targetP * 4 + targetF * 9 ) ) / 4 ) ;​​          
+        const bmr = Math.round(10 * w + 6.25 * h - 5 * 20 + 5);
+        const tdee = Math.round(bmr * (act + workout * 0.05));
+        const targetCal = tdee + surplus;
+        const targetP = Math.round(w * 2.1);
+        const targetF = Math.round((targetCal * 0.24) / 9);
+        const targetC = Math.round((targetCal - (targetP * 4 + targetF * 9)) / 4);
 
-        currentTargets  =  {  cal : targetCal ,  p : targetP ,  f : targetF ,  c : targetC  } ;
+        currentTargets = { cal: targetCal, p: targetP, f: targetF, c: targetC };
 
-        書類。getElementById ( 'bmrVal' ) 。テキストコンテンツ =  bmr ;
-        document.getElementById ( ' tdeeVal ' ) . textContent = tdee ;  
-        document.getElementById ( ' targetCalVal ' ) . textContent = targetCal ;  
-        document.getElementById ( ' tCalText ' ) . textContent = targetCal ;  
-        document.getElementById ( ' tPText ' ) . textContent = targetP ;  
-        document.getElementById ( ' tFText ' ) . textContent = targetF ;  
-        document.getElementById ( ' tCText ' ) . textContent = targetC ;  
-        document.getElementById ( 'targetNotice' ) . textContent = `目標: $ { targetCal } kcal` ;  
+        document.getElementById('bmrVal').textContent = bmr;
+        document.getElementById('tdeeVal').textContent = tdee;
+        document.getElementById('targetCalVal').textContent = targetCal;
+        document.getElementById('tCalText').textContent = targetCal;
+        document.getElementById('tPText').textContent = targetP;
+        document.getElementById('tFText').textContent = targetF;
+        document.getElementById('tCText').textContent = targetC;
+        document.getElementById('targetNotice').textContent = `目標: ${targetCal} kcal`;
 
-        renderDay ( ) ;
+        renderDay();
     }
 
-    function  toggleConfig ( )  {
-        const  el  =  document.getElementById ( ' configCard ' ) ;
-        el.style.display = el.style.display === ' none ' ? ' block ' : ' none ' ;​​    
+    function toggleConfig() {
+        const el = document.getElementById('configCard');
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
     }
 
-    // 4. AI自然言語解析 (思考抑制・高速版)
-    async  function  fetchNutritionWithAI ( )  {
-        const  query  =  document.getElementById ( ' aiQuery ' ) . value.trim ( ) ;​​
-        const  apiKey  =  getApiKey ( ) ;
-        const  statusEl  =  document.getElementById ( ' aiStatus ' ) ;
-        const  btn  =  document.getElementById ( ' aiSearchBtn ' ) ;
+    // 4. AI自然言語解析 (Thinking抑制・高速版)
+    async function fetchNutritionWithAI() {
+        const query = document.getElementById('aiQuery').value.trim();
+        const apiKey = getApiKey();
+        const statusEl = document.getElementById('aiStatus');
+        const btn = document.getElementById('aiSearchBtn');
 
-        if  ( ! query )  {  alert ( "料理名を入力してください" ) ; 戻る;  }
-        if  ( ! apiKey )  {  alert ( "上部にGemini APIキーを入力して保存してください" ) ; 戻る;  }
+        if (!query) { alert("料理名を入力してください"); return; }
+        if (!apiKey) { alert("上部にGemini APIキーを入力して保存してください"); return; }
 
-        btn.disabled = true ;​​  
-        ステータスEl 。textContent  =  "⚡解析中..." ;
-        statusEl.style.color = " var(-- primary ) " ;  
+        btn.disabled = true;
+        statusEl.textContent = "⚡ 解析中...";
+        statusEl.style.color = "var(--primary)";
 
-        const プロンプト =  `料理名: " ${ query } "
+        const prompt = `料理名: "${query}"
 この料理の一般的な1人前の栄養素を推計し、以下の形式のJSONのみで即答してください:
-{"foodName":"料理名","calories":kcal,"protein":g,"fat":g,"carbs":g}` ;
+{"foodName":"料理名","calories":kcal,"protein":g,"fat":g,"carbs":g}`;
 
-        try  {
-            const  url  =  `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=$ { encodeURIComponent ( apiKey ) } ` ;
-            const  res  =  await  fetch ( url ,  {
-                メソッド: "POST" 、
-                ヘッダー: {
-                    "Content-Type" : "application/json" 、
-                    「x-goog-api-key」 : apiKey
-                } 、
-                body : JSON . stringify ( {
-                    内容: [ { パーツ: [ { テキスト:プロンプト } ]  } ] 、
-                    generationConfig : {
-                        responseMimeType : "application/json" 、
-                        maxOutputTokens : 120 、
-                        thinkingConfig : {  thinkingBudget : 0  }
+        try {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": apiKey
+                },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        maxOutputTokens: 120,
+                        thinkingConfig: { thinkingBudget: 0 }
                     }
-                } )
-            } ) ;
+                })
+            });
 
-            if  ( ! res.ok ) {​​ 
-                const  errJson  =  await  res.json ( ) . catch ( ( ) = > ( { } ) ) ;​  
-                throw  new  Error ( errJson.error ? .message || ` HTTP $ { res.status } ` ) ;​​  
+            if (!res.ok) {
+                const errJson = await res.json().catch(() => ({}));
+                throw new Error(errJson.error?.message || `HTTP ${res.status}`);
             }
 
-            const  data  =  await  res.json ( ) ;​​
-            const  text  =  data.candidates [ 0 ] .content.parts [ 0 ] .text ;​​​​​​
-            const  parsed  =  JSON.parse ( text ) ;​​
+            const data = await res.json();
+            const text = data.candidates[0].content.parts[0].text;
+            const parsed = JSON.parse(text);
 
-            document.getElementById ( ' manName ' ) . value = parsed.foodName || query ;​​    
-            document.getElementById ( ' manCal ' ) . value = Math.round ( parsed.calories ) ;​​​​  
-            document.getElementById ( ' manP ' ) . value = Number ( parsed.protein ) .toFixed ( 1 ) ;​​​  
-            document.getElementById ( ' manF ' ) . value = Number ( parsed.fat ) .toFixed ( 1 ) ;​​​  
-            document.getElementById ( ' manC ' ) . value = Number ( parsed.carbs ) .toFixed ( 1 ) ;​​​  
+            document.getElementById('manName').value = parsed.foodName || query;
+            document.getElementById('manCal').value = Math.round(parsed.calories);
+            document.getElementById('manP').value = Number(parsed.protein).toFixed(1);
+            document.getElementById('manF').value = Number(parsed.fat).toFixed(1);
+            document.getElementById('manC').value = Number(parsed.carbs).toFixed(1);
 
-            ステータスEl 。textContent  =  `✅「${解析されました。」食べ物名 ||  「クエリ}」をセットしました。「記録に追加」を押してください。
-            statusEl.style.color = " # 16a34a " ;​  
-        }  catch  ( err )  {
-            console.error ( "AIフェッチエラー: " , err ) ; 
-            ステータスEl 。textContent  =  `❌ エラー: ${ err .メッセージ} ` ;
-            statusEl.style.color = " # ef4444 " ;​  
-        } ついに {
-            btn.disabled = false ;​​  
+            statusEl.textContent = `✅ 「${parsed.foodName || query}」をセットしました。「記録に追加」を押してください。`;
+            statusEl.style.color = "#16a34a";
+        } catch (err) {
+            console.error("AI Fetch Error:", err);
+            statusEl.textContent = `❌ エラー: ${err.message}`;
+            statusEl.style.color = "#ef4444";
+        } finally {
+            btn.disabled = false;
         }
     }
 
-    // 5. 定番のポイント（味噌汁 1杯を追加）
-    const  PRESETS  =  [
-        {  name : "🍚白米（1合 約330g）" ,  cal : 515 ,  p : 8.3 ,  f : 1.0 ,  c : 122.4  } ,
-        {  name : "🍝パスタ（乾麺 150g）" ,  cal : 540 ,  p : 19.5 ,  f : 3.0 ,  c : 108.0  } ,
-        {  name : "🥣 味噌汁（1杯）" ,  cal : 45 ,  p : 2.5 ,  f : 1.2 ,  c : 5.5  } ,
-        {  name : "🥤ゲイナー 30g（水）" ,  cal : 116 ,  p : 9.3 ,  f : 1.9 ,  c : 15.0  } ,
-        {  name : "🥤ゲイナー 60g（水）" ,  cal : 233 ,  p : 18.6 ,  f : 3.7 ,  c : 30.0  } ,
-        {  name : "🥚 卵1個＋納豆1パック" ,  cal : 175 ,  p : 14.5 ,  f : 10.3 ,  c : 6.2  } ,
-        {  name : "🍗 鶏むねガリバタ（1枚分）" ,  cal : 650 ,  p : 68.0 ,  f : 28.0 ,  c : 24.0  } ,
-        {  name : "🍋 鶏むねネギ塩（1枚分）" ,  cal : 620 ,  p : 68.0 ,  f : 26.0 ,  c : 20.0  }
-    ] ;
+    // 5. 定番ショートカット（味噌汁 1杯 を追加）
+    const PRESETS = [
+        { name: "🍚 白米（1合 約330g）", cal: 515, p: 8.3, f: 1.0, c: 122.4 },
+        { name: "🍝 パスタ（乾麺 150g）", cal: 540, p: 19.5, f: 3.0, c: 108.0 },
+        { name: "🥣 味噌汁（1杯）", cal: 45, p: 2.5, f: 1.2, c: 5.5 },
+        { name: "🥤 ゲイナー 30g（水）", cal: 116, p: 9.3, f: 1.9, c: 15.0 },
+        { name: "🥤 ゲイナー 60g（水）", cal: 233, p: 18.6, f: 3.7, c: 30.0 },
+        { name: "🥚 卵1個＋納豆1パック", cal: 175, p: 14.5, f: 10.3, c: 6.2 },
+        { name: "🍗 鶏むねガリバタ（1枚分）", cal: 650, p: 68.0, f: 28.0, c: 24.0 },
+        { name: "🍋 鶏むねネギ塩（1枚分）", cal: 620, p: 68.0, f: 26.0, c: 20.0 }
+    ];
 
-    function  initPresets ( )  {
-        const  box  =  document.getElementById ( ' presetShortcutBox ' ) ;
-        box.innerHTML = " " ;​  
-        プリセット。forEach ( item = > {  
-            const  btn  =  document.createElement ( ' button ' ) ;
-            btn.className = ' preset  -  btn' ;
-            btn.innerHTML = `<span class=" preset -name"> ${ item.name } </span> <span class="preset-meta"> $ { item.cal } kcal | P : ${ item.p } g </span> ` ;  
-            btn.onclick = ( ) = > saveItem ( { ... item , id : Date.now ( ) } ) ;​ ​​     
-            box.appendChild ( btn ) ;​​
-        } ) ;
+    function initPresets() {
+        const box = document.getElementById('presetShortcutBox');
+        box.innerHTML = "";
+        PRESETS.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'preset-btn';
+            btn.innerHTML = `<span class="preset-name">${item.name}</span><span class="preset-meta">${item.cal}kcal | P:${item.p}g</span>`;
+            btn.onclick = () => saveItem({ ...item, id: Date.now() });
+            box.appendChild(btn);
+        });
     }
 
     // 6. 履歴プール管理
-    function  getGlobalFoodHistory ( )  {
-        const  raw  =  localStorage.getItem ( ' bulkup_global_food_history ' ) ;
-        return  raw ? JSON.parse ( raw ) : [ ] ;​​
+    function getGlobalFoodHistory() {
+        const raw = localStorage.getItem('bulkup_global_food_history');
+        return raw ? JSON.parse(raw) : [];
     }
 
-    function  recordToGlobalHistory ( item )  {
-        let  history  =  getGlobalFoodHistory ( ) ;
-        history  =  history.filter ( h = > h.name ! == item.name ) ;​​​​    
-        history.unshift ( { name : item.name , cal : item.cal , p : item.p , f : item.f , c : item.c } ) ;​​​​​​​​​​​​      
-        if  ( history.length > 15 ) history.pop ( ) ;​​ ​​  
-        localStorage.setItem ( ' bulkup_global_food_history ' , JSON.stringify ( history ) ) ;​​ 
-        renderHistory ( ) ;
+    function recordToGlobalHistory(item) {
+        let history = getGlobalFoodHistory();
+        history = history.filter(h => h.name !== item.name);
+        history.unshift({ name: item.name, cal: item.cal, p: item.p, f: item.f, c: item.c });
+        if (history.length > 15) history.pop();
+        localStorage.setItem('bulkup_global_food_history', JSON.stringify(history));
+        renderHistory();
     }
 
-    function  renderHistory ( )  {
-        const  container  =  document.getElementById ( ' recentHistoryContainer ' ) ;
-        container.innerHTML = " " ;​  
-        const  history  =  getGlobalFoodHistory ( ) ;
+    function renderHistory() {
+        const container = document.getElementById('recentHistoryContainer');
+        container.innerHTML = "";
+        const history = getGlobalFoodHistory();
 
-        if  ( history.length === 0 ) {​​   
-            容器。innerHTML  =  `<div style="font-size:0.75rem; color:var(--subtext); text-align:center; padding:8px;">まだ履歴がありません。一度記録したらここに並びます。</div>` ;
-            return ;
+        if (history.length === 0) {
+            container.innerHTML = `<div style="font-size:0.75rem; color:var(--subtext); text-align:center; padding:8px;">まだ履歴がありません。一度記録するとここに並びます。</div>`;
+            return;
         }
 
-        履歴.forEach ( item = > {  
-            const  div  =  document.createElement ( ' div ' ) ;
-            div.className = ' history-item ' ;  
-            div.innerHTML = `​​  
+        history.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.innerHTML = `
                 <div class="history-info">
-                    <strong> ${ item . name } </strong>
-                    <span style="font-size:0.7rem; color:var(--subtext);"> ${ Math . round ( item . cal ) } kcal （P: ${ item . p } g / F: ${ item . f } g / C: ${ item . c } g）</span>
+                    <strong>${item.name}</strong>
+                    <span style="font-size:0.7rem; color:var(--subtext);">${Math.round(item.cal)} kcal （P: ${item.p}g / F: ${item.f}g / C: ${item.c}g）</span>
                 </div>
-                <button class="btn-quick-add" onclick="quickAddFromHistory(' ${ encodeURIComponent ( JSON . stringify ( item ) ) } ')">＋追加</button>
-            ` ;
-            container.appendChild ( div ) ;​​
-        } ) ;
+                <button class="btn-quick-add" onclick="quickAddFromHistory('${encodeURIComponent(JSON.stringify(item))}')">＋ 追加</button>
+            `;
+            container.appendChild(div);
+        });
     }
 
-    function  quickAddFromHistory ( encoded )  {
-        const  item  =  JSON.parse ( decodeURIComponent ( encoded ) ) ;​​
-        saveItem ( { ... item ,  id : Date . now ( )  } ) ;
+    function quickAddFromHistory(encoded) {
+        const item = JSON.parse(decodeURIComponent(encoded));
+        saveItem({ ...item, id: Date.now() });
     }
 
-    // 7. 日別データの保存と処理
-    function  getDayStorageKey ( dateStr )  {  return  `bulkup_pro_log_ ${ dateStr } ` ;  }
+    // 7. 日別データ保存＆描画
+    function getDayStorageKey(dateStr) { return `bulkup_pro_log_${dateStr}`; }
 
-    function  getDayData ( dateStr )  {
-        const  raw  =  localStorage.getItem ( getDayStorageKey ( dateStr ) ) ;​​
-        return  raw ? JSON.parse ( raw ) : { weight : " " , items : [ ] } ;​   
+    function getDayData(dateStr) {
+        const raw = localStorage.getItem(getDayStorageKey(dateStr));
+        return raw ? JSON.parse(raw) : { weight: "", items: [] };
     }
 
-    function  saveDayData ( dateStr ,  data )  {
-        localStorage.setItem ( getDayStorageKey ( dateStr ) , JSON.stringify ( data ) ) ;​​​​ 
-        renderDay ( ) ;
+    function saveDayData(dateStr, data) {
+        localStorage.setItem(getDayStorageKey(dateStr), JSON.stringify(data));
+        renderDay();
     }
 
-    function  saveItem ( item )  {
-        const  data  =  getDayData ( activeDate ) ;
-        data.items.push ( item ) ;​​​​
-        saveDayData ( activeDate ,  data ) ;
-        recordToGlobalHistory ( item ) ;
+    function saveItem(item) {
+        const data = getDayData(activeDate);
+        data.items.push(item);
+        saveDayData(activeDate, data);
+        recordToGlobalHistory(item);
     }
 
-    function  addConfirmedFood ( )  {
-        const  name  =  document.getElementById ( ' manName ' ) . value.trim ( ) ;​​
-        const  cal  =  parseFloat ( document.getElementById ( ' manCal ' ) . value ) || 0 ;  
-        const  p  =  parseFloat ( document . getElementById ( 'manP' ) . value )  ||  0 ;
-        const  f  =  parseFloat ( document . getElementById ( 'manF' ) . value )  ||  0 ;
-        const  c  =  parseFloat ( document . getElementById ( 'manC' ) . value )  ||  0 ;
+    function addConfirmedFood() {
+        const name = document.getElementById('manName').value.trim();
+        const cal = parseFloat(document.getElementById('manCal').value) || 0;
+        const p = parseFloat(document.getElementById('manP').value) || 0;
+        const f = parseFloat(document.getElementById('manF').value) || 0;
+        const c = parseFloat(document.getElementById('manC').value) || 0;
 
-        if  ( ! name  ||  cal  ===  0 )  return ;
+        if (!name || cal === 0) return;
 
-        saveItem ( {  id : Date . now ( ) , name , cal , p , f , c } ) ;
+        saveItem({ id: Date.now(), name, cal, p, f, c });
 
-        document.getElementById ( 'aiQuery ' ) . value = " " ;  
-        document.getElementById ( 'manName ' ) . value = " " ;  
-        document.getElementById ( 'manCal ' ) . value = " " ;  
-        document.getElementById ( 'manP ' ) . value = " " ;  
-        document.getElementById ( 'manF ' ) . value = " " ;  
-        document.getElementById ( 'manC ' ) . value = " " ;  
-        書類。getElementById ( 'aiStatus' ) 。textContent  =  "記録しました！次のメニューを入力できます。" ;
-        document.getElementById ( 'aiStatus' ) . style.color = " var(-- subtext ) " ;  
+        document.getElementById('aiQuery').value = "";
+        document.getElementById('manName').value = "";
+        document.getElementById('manCal').value = "";
+        document.getElementById('manP').value = "";
+        document.getElementById('manF').value = "";
+        document.getElementById('manC').value = "";
+        document.getElementById('aiStatus').textContent = "記録しました！次のメニューを入力できます。";
+        document.getElementById('aiStatus').style.color = "var(--subtext)";
     }
 
-    function  deleteFoodItem ( id )  {
-        const  data  =  getDayData ( activeDate ) ;
-        data.items = data.items.filter ( i = > i.id ! == id ) ;​​ ​​​​     
-        saveDayData ( activeDate ,  data ) ;
+    function deleteFoodItem(id) {
+        const data = getDayData(activeDate);
+        data.items = data.items.filter(i => i.id !== id);
+        saveDayData(activeDate, data);
     }
 
-    function  clearSelectedDayLog ( )  {
-        if  ( ! confirm ( ` ${ activeDate }の食事記録をリセットしますか?` ) )  return ;
-        const  data  =  getDayData ( activeDate ) ;
-        data.items = [ ] ;​​  
-        saveDayData ( activeDate ,  data ) ;
+    function clearSelectedDayLog() {
+        if (!confirm(`${activeDate} の食事記録をリセットしますか？`)) return;
+        const data = getDayData(activeDate);
+        data.items = [];
+        saveDayData(activeDate, data);
     }
 
-    function  renderDay ( )  {
-        const  data  =  getDayData ( activeDate ) ;
-        document.getElementById ( ' dailyWeightInput ' ) . value = data.weight || " " ;​    
-        document.getElementById ( ' curDateDisplay ' ) . textContent = activeDate ;  
-        document.getElementById ( ' logHeaderDate ' ) . textContent = activeDate ;  
+    function renderDay() {
+        const data = getDayData(activeDate);
+        document.getElementById('dailyWeightInput').value = data.weight || "";
+        document.getElementById('curDateDisplay').textContent = activeDate;
+        document.getElementById('logHeaderDate').textContent = activeDate;
 
-        let  sum  =  {  cal : 0 ,  p : 0 ,  f : 0 ,  c : 0  } ;
-        const  listEl  = ドキュメント。getElementById ( 'todayFoodList' ) ;
-        listEl.innerHTML = " " ;​  
+        let sum = { cal: 0, p: 0, f: 0, c: 0 };
+        const listEl = document.getElementById('todayFoodList');
+        listEl.innerHTML = "";
 
-        if  ( data.items.length === 0 ) {​​​​   
-            リストEl 。innerHTML  =  `<li style="text-align:center; color:var(--subtext); font-size:0.8rem; padding:8px 0;">この日の記録はありません。</li>` ;
-        } それ以外 {
-            data.items.forEach ( it = > {​​​  
-                sum.cal + = it.cal ; sum.p + = it.p ; sum.f + = it.f ; sum.c + = it.c ;​​​​​​​​​​​​           
-                const  li  =  document.createElement ( ' li ' ) ;
-                li.className = ' food-item ' ;  
-                li.innerHTML = `​​  
+        if (data.items.length === 0) {
+            listEl.innerHTML = `<li style="text-align:center; color:var(--subtext); font-size:0.8rem; padding:8px 0;">この日の記録はありません。</li>`;
+        } else {
+            data.items.forEach(it => {
+                sum.cal += it.cal; sum.p += it.p; sum.f += it.f; sum.c += it.c;
+                const li = document.createElement('li');
+                li.className = 'food-item';
+                li.innerHTML = `
                     <div>
-                        <strong> ${ it . name } </strong>
-                        <div class="food-macros"> ${ Math . round ( it . cal ) } kcal （P: ${ it . p } g / F: ${ it . f } g / C: ${ it . c } g）</div>
+                        <strong>${it.name}</strong>
+                        <div class="food-macros">${Math.round(it.cal)} kcal （P: ${it.p}g / F: ${it.f}g / C: ${it.c}g）</div>
                     </div>
-                    <button class="btn-del" onclick="deleteFoodItem( ${ it . id } )">削除</button>
-                ` ;
-                listEl.appendChild ( li ) ;​​
-            } ) ;
+                    <button class="btn-del" onclick="deleteFoodItem(${it.id})">削除</button>
+                `;
+                listEl.appendChild(li);
+            });
         }
 
-        document.getElementById ( ' curCal ' ) . textContent = Math.round ( sum.cal ) ;​​​​  
-        document.getElementById ( ' curP ' ) . textContent = sum.p.toFixed ( 1 ) ;​​​​  
-        書類。getElementById ( 'curF' ) 。textContent  =  sum 。f 。toFixed ( 1 ) ;
-        document.getElementById ( ' curC ' ) . textContent = sum.c.toFixed ( 1 ) ;​​​​  
+        document.getElementById('curCal').textContent = Math.round(sum.cal);
+        document.getElementById('curP').textContent = sum.p.toFixed(1);
+        document.getElementById('curF').textContent = sum.f.toFixed(1);
+        document.getElementById('curC').textContent = sum.c.toFixed(1);
 
-        document.getElementById ( ' barCal ' ) . style.width = Math.min ( 100 , ( sum.cal / currentTargets.cal ) * 100 ) + " % " ;​​​​​​         
-        document.getElementById ( ' barP ' ) . style.width = Math.min ( 100 , ( sum.p / currentTargets.p ) * 100 ) + " % " ;​​​​​​         
-        document.getElementById ( ' barF ' ) . style.width = Math.min ( 100 , ( sum.f / currentTargets.f ) * 100 ) + " % " ;​​​​​​         
-        document.getElementById ( ' barC ' ) . style.width = Math.min ( 100 , ( sum.c / currentTargets.c ) * 100 ) + " % " ;​​​​​​         
+        document.getElementById('barCal').style.width = Math.min(100, (sum.cal / currentTargets.cal) * 100) + "%";
+        document.getElementById('barP').style.width = Math.min(100, (sum.p / currentTargets.p) * 100) + "%";
+        document.getElementById('barF').style.width = Math.min(100, (sum.f / currentTargets.f) * 100) + "%";
+        document.getElementById('barC').style.width = Math.min(100, (sum.c / currentTargets.c) * 100) + "%";
 
-        const  diff  =  currentTargets.cal - Math.round  ( sum.cal ) ;​ ​​​​​
-        書類。getElementById ( 'remCal' ) 。textContent  =  diff  >  0 ? `あと${ diff } kcal` : `🎉目標達成！（+ ${ Math .腹筋( diff ) } kcal）` ;
+        const diff = currentTargets.cal - Math.round(sum.cal);
+        document.getElementById('remCal').textContent = diff > 0 ? `あと ${diff} kcal` : `🎉 目標達成！（+${Math.abs(diff)} kcal）`;
     }
 
-    // 実行
-    initDatePicker ( ) ;
-    const  savedKey  =  getApiKey ( ) ;
-    if  ( savedKey )  document.getElementById ( ' apiKeyInput ' ) . value = savedKey ;  
-    initPresets ( ) ;
-    renderHistory ( ) ;
-    ターゲットを再計算する（）;
-</script>​​
-</body>​​
-</html>​​
+    // 初期化実行
+    initDatePicker();
+    const savedKey = getApiKey();
+    if (savedKey) document.getElementById('apiKeyInput').value = savedKey;
+    initPresets();
+    renderHistory();
+    recalculateTargets();
+</script>
+</body>
+</html>
